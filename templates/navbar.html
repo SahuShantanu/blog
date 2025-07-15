@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.05);
+            z-index: -1;
+        }
+
+        .navbar-left .company-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ffffff, #f5f5f5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-left .company-name:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-right a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-right a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .navbar-right a:hover::after {
+            width: 100%;
+        }
+
+        .navbar-right a.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        .navbar-right a.active::after {
+            width: 100%;
+        }
+
+        /* Navbar Bubbles */
+        .nav-bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .nav-bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: nav-rise 10s infinite ease-in;
+        }
+
+        @keyframes nav-rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(50px) rotate(180deg);
+                opacity: 0.3;
+            }
+            100% {
+                bottom: 600px;
+                transform: translateX(-50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hamburger menu for mobile */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 1.5rem;
+            }
+            
+            .navbar-right {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            
+            .navbar-left {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .navbar-right {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+            
+            .navbar-right.active {
+                display: flex;
+            }
+            
+            .navbar-right a {
+                width: 100%;
+                padding: 0.75rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-bubbles" id="nav-bubbles-container"></div>
+        
+        <div class="navbar-left">
+            <span class="company-name">MyCompany</span>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <div class="navbar-right" id="navbar-right">
+            <a href="/" class="active">Home</a>
+            <a href="/aboutme">About Me</a>
+            <a href="/blogs">Blogs</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/login">Login/Signup</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Your page content goes here -->
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create navbar bubbles
+            const navBubblesContainer = document.getElementById('nav-bubbles-container');
+            
+            for (let i = 0; i < 10; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'nav-bubble';
+                
+                // Random size between 10px and 50px
+                const size = Math.random() * 40 + 10;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration between 5s and 15s
+                const duration = Math.random() * 10 + 5;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random opacity
+                bubble.style.opacity = Math.random() * 0.3 + 0.1;
+                
+                navBubblesContainer.appendChild(bubble);
+            }
+            
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navbarRight = document.getElementById('navbar-right');
+            
+            hamburger.addEventListener('click', function() {
+                navbarRight.classList.toggle('active');
+                hamburger.innerHTML = navbarRight.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Set active link based on current page
+            const navLinks = document.querySelectorAll('.navbar-right a');
+            const currentUrl = window.location.pathname;
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentUrl) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

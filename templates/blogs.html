@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2, h3 {
+            color: #1a2a6c;
+            font-weight: 700;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Page Header */
+        .container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+            border-radius: 2px;
+        }
+
+        /* Blog Posts Grid */
+        .blog-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        /* Blog Posts */
+        .blog-post {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex: 1 1 calc(33.333% - 2rem);
+            min-width: 300px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-post h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a2a6c;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .blog-post h3::before {
+            content: '\f15c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: -1rem;
+            color: #b21f1f;
+        }
+
+        .blog-post p {
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .blog-post small {
+            display: block;
+            text-align: right;
+            color: #777;
+            font-style: italic;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .blog-post small::before {
+            content: '\f007';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+        }
+
+        /* No Blogs Message */
+        .no-blogs {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+
+        .no-blogs p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .no-blogs .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Bubbles Background Effect */
+        .bubbles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(26, 42, 108, 0.05);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatBubble 15s infinite ease-in;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                bottom: -100px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(100px) rotate(180deg);
+                opacity: 0.2;
+            }
+            100% {
+                bottom: 100vh;
+                transform: translateX(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .blog-post {
+                flex: 1 1 calc(50% - 2rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .container h2 {
+                font-size: 2rem;
+            }
+            
+            .blog-post {
+                flex: 1 1 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <!-- Background Bubbles -->
+    <div class="bubbles-bg" id="bubbles-bg"></div>
+    
+    <div class="container">
+        <h2>Blogs</h2>
+        <div class="blog-grid">
+            {% if blog_posts %}
+                {% for blog in blog_posts %}
+                    <div class="blog-post">
+                        <h3>{{ blog[1] }}</h3>
+                        <p>{{ blog[2] }}</p>
+                        <small>By {{ blog[0] }}</small>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-blogs">
+                    <div class="icon"><i class="fas fa-book-open"></i></div>
+                    <p>No blogs found.</p>
+                    <p>Be the first to create one!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create background bubbles
+            const bubblesBg = document.getElementById('bubbles-bg');
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bg-bubble';
+                
+                // Random size between 20px and 100px
+                const size = Math.random() * 80 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration between 10s and 25s
+                const duration = Math.random() * 15 + 10;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                bubble.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // Random opacity
+                bubble.style.opacity = Math.random() * 0.2 + 0.1;
+                
+                bubblesBg.appendChild(bubble);
+            }
+            
+            // Add hover effect to blog posts
+            const blogPosts = document.querySelectorAll('.blog-post');
+            blogPosts.forEach(post => {
+                post.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-7px)';
+                    this.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.12)';
+                });
+                
+                post.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

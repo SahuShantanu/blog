@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text: #495057;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Geometric Background */
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, var(--light) 0%, #e9ecef 100%);
+            overflow: hidden;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            opacity: 0.08;
+            animation: float 25s infinite linear;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid var(--primary);
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+        }
+
+        .square {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* Main Content Container */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 90vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            z-index: -1;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            margin-bottom: 2.5rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(26, 42, 108, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 42, 108, 0.4);
+        }
+
+        /* Search Bar */
+        .search-section {
+            padding: 2rem 0;
+            margin-bottom: 4rem;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            display: flex;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .search-bar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            background: transparent;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        /* Content Sections */
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        /* Card Grids */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), transparent);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .card-text {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Featured Cards */
+        .featured-card {
+            grid-column: span 1;
+        }
+
+        @media (min-width: 992px) {
+            .featured-card {
+                grid-column: span 2;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .featured-card .card-img {
+                height: auto;
+            }
+        }
+
+        /* Category Cards */
+        .category-card {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .category-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* About Author */
+        .about-author {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .about-author {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        .author-img {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+        }
+
+        .author-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .author-name {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .author-bio {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+            .hero-section {
+                height: auto;
+                padding: 5rem 0;
+                min-height: auto;
+            }
+            
+            .hero-content::before {
+                top: -20px;
+                left: -20px;
+                right: -20px;
+                bottom: -20px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .search-input,
+            .search-btn {
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .search-btn {
+                justify-content: center;
+                padding: 0.8rem;
+            }
+            
+            .featured-card {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .main-content {
+                padding: 0 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <!-- Geometric Background -->
+    <div class="geometric-bg" id="geometric-bg"></div>
+    
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to E-Blogs</h1>
+                <p class="hero-subtitle">Discover, create, and share amazing blogs with the world!</p>
+                <a href="/signup" class="hero-btn">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Search Bar -->
+        <section class="search-section">
+            <div class="search-container">
+                <form class="search-bar" method="GET" action="/blogs">
+                    <input type="text" name="q" class="search-input" placeholder="Search blogs, categories, authors...">
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Latest Posts -->
+        <section class="section">
+            <h2 class="section-title">Latest Posts</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #1a2a6c, #4b6cb7);">
+                        How to Start Blogging
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">How to Start Blogging</h3>
+                        <p class="card-text">Learn the essential steps to launch your successful blogging journey with our comprehensive guide.</p>
+                        <div class="card-meta">
+                            <span>By Jane Doe</span>
+                            <span>2 days ago</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #b21f1f, #e94057);">
+                        Top 10 Tech Trends
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Top 10 Tech Trends</h3>
+                        <p class="card-text">Discover the most exciting technology trends that will shape our future in the coming year.</p>
+                        <div class="card-meta">
+                            <span>By John Smith</span>
+                            <span>5 days ago</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #fdbb2d, #f46b45);">
+                        Travel Diaries: Europe
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Travel Diaries: Europe</h3>
+                        <p class="card-text">Follow my 30-day adventure through Europe's most beautiful cities and hidden gems.</p>
+                        <div class="card-meta">
+                            <span>By Alex Johnson</span>
+                            <span>1 week ago</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Featured Articles -->
+        <section class="section">
+            <h2 class="section-title">Featured Articles</h2>
+            <div class="card-grid">
+                <article class="card featured-card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f);">
+                        The Power of Storytelling
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">The Power of Storytelling</h3>
+                        <p class="card-text">Explore how compelling narratives can transform your blog and captivate your audience like never before.</p>
+                        <p class="card-text">This in-depth guide covers everything from narrative structures to emotional triggers that make stories memorable.</p>
+                        <div class="card-meta">
+                            <span>By Sarah Williams</span>
+                            <span>Featured</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="card featured-card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #fdbb2d, #b21f1f);">
+                        Building Your Brand Online
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Building Your Brand Online</h3>
+                        <p class="card-text">Learn the strategies top influencers use to create powerful personal brands that stand out in crowded markets.</p>
+                        <p class="card-text">Includes case studies and actionable steps you can implement today.</p>
+                        <div class="card-meta">
+                            <span>By Michael Chen</span>
+                            <span>Featured</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Popular Posts -->
+        <section class="section">
+            <h2 class="section-title">Popular Posts</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #4b6cb7, #1a2a6c);">
+                        How to Write Viral Blogs
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">How to Write Viral Blogs</h3>
+                        <p class="card-text">Discover the secret formula behind content that spreads like wildfire across social media platforms.</p>
+                        <div class="card-meta">
+                            <span>By Emma Roberts</span>
+                            <span>1.2K views</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #e94057, #b21f1f);">
+                        Best Blogging Tools
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Best Blogging Tools</h3>
+                        <p class="card-text">Our curated list of essential tools that will streamline your workflow and boost your productivity.</p>
+                        <div class="card-meta">
+                            <span>By David Kim</span>
+                            <span>980 views</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="card">
+                    <div class="card-img" style="background: linear-gradient(135deg, #f46b45, #fdbb2d);">
+                        SEO Mastery Guide
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">SEO Mastery Guide</h3>
+                        <p class="card-text">Advanced techniques to rank your content higher in search engines and drive organic traffic.</p>
+                        <div class="card-meta">
+                            <span>By Priya Patel</span>
+                            <span>1.5K views</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Categories Grid -->
+        <section class="section">
+            <h2 class="section-title">Categories</h2>
+            <div class="card-grid">
+                <div class="card category-card" style="background: linear-gradient(135deg, #1a2a6c, #4b6cb7);">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Technology</span>
+                </div>
+                
+                <div class="card category-card" style="background: linear-gradient(135deg, #b21f1f, #e94057);">
+                    <i class="fas fa-plane"></i>
+                    <span>Travel</span>
+                </div>
+                
+                <div class="card category-card" style="background: linear-gradient(135deg, #fdbb2d, #f46b45);">
+                    <i class="fas fa-utensils"></i>
+                    <span>Food</span>
+                </div>
+                
+                <div class="card category-card" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
+                    <i class="fas fa-heart"></i>
+                    <span>Lifestyle</span>
+                </div>
+                
+                <div class="card category-card" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Business</span>
+                </div>
+                
+                <div class="card category-card" style="background: linear-gradient(135deg, #f46b45, #eea849);">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Education</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About the Author -->
+        <section class="section">
+            <h2 class="section-title">About the Author</h2>
+            <div class="about-author">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Author" class="author-img">
+                <div class="author-content">
+                    <h3 class="author-name">Jane Doe</h3>
+                    <p class="author-bio">Jane is a passionate blogger and tech enthusiast with over 10 years of experience in content creation and digital marketing. Her mission is to empower others through knowledge sharing and storytelling.</p>
+                    <p class="author-bio">When she's not writing, Jane enjoys traveling, photography, and experimenting with new technologies. She believes that everyone has a unique story to tell and is dedicated to helping people find their voice online.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-medium"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create geometric background elements
+            const geometricBg = document.getElementById('geometric-bg');
+            const shapes = ['triangle', 'circle', 'square'];
+            const colors = ['#1a2a6c', '#b21f1f', '#fdbb2d'];
+            
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                shape.className = `geometric-shape ${shapes[Math.floor(Math.random() * shapes.length)]}`;
+                
+                // Random position
+                shape.style.left = `${Math.random() * 100}%`;
+                shape.style.top = `${Math.random() * 100}%`;
+                
+                // Random size
+                const size = Math.random() * 100 + 50;
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                
+                // Random color
+                shape.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 30 + 20;
+                const delay = Math.random() * 15;
+                shape.style.animationDuration = `${duration}s`;
+                shape.style.animationDelay = `${delay}s`;
+                
+                geometricBg.appendChild(shape);
+            }
+            
+            // Responsive adjustments
+            function handleResize() {
+                const featuredCards = document.querySelectorAll('.featured-card');
+                if (window.innerWidth < 992) {
+                    featuredCards.forEach(card => {
+                        if (card.style.gridTemplateColumns) {
+                            card.style.gridTemplateColumns = '';
+                        }
+                    });
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
+            
+            // Card hover effects
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

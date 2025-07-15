@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h2, h3, h4 {
+            color: #1a2a6c;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D Cube Section */
+        .about-3d {
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .about-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 42, 108, 0.05), rgba(178, 31, 31, 0.05), rgba(253, 187, 45, 0.05));
+            z-index: -1;
+        }
+
+        .about-3d-main {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .about-3d-cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 20s infinite linear;
+        }
+
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .face i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .face:hover {
+            opacity: 1;
+            transform: translateZ(20px);
+        }
+
+        .front { transform: translateZ(100px); }
+        .back { transform: rotateY(180deg) translateZ(100px); }
+        .right { transform: rotateY(90deg) translateZ(100px); }
+        .left { transform: rotateY(-90deg) translateZ(100px); }
+        .top { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        .about-3d-text {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            padding: 1rem;
+        }
+
+        .about-3d-text h3 {
+            font-size: 1.8rem;
+            color: #b21f1f;
+        }
+
+        .about-3d-text p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Cards Section */
+        .about-cards-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .about-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Feedback Section */
+        .about-feedback-section {
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-feedback-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-feedback {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .about-feedback::before {
+            content: '\201C';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(26, 42, 108, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .about-feedback p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .author {
+            font-weight: 600;
+            color: #b21f1f;
+        }
+
+        /* Functions Section */
+        .about-functions-section {
+            margin: 4rem 0;
+        }
+
+        .about-functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .about-functions-list li {
+            padding: 1rem 1.5rem;
+            background: white;
+            border-left: 4px solid #1a2a6c;
+            margin-bottom: 0.5rem;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .about-functions-list li:hover {
+            transform: translateX(10px);
+            border-left: 4px solid #fdbb2d;
+        }
+
+        /* Importance Section */
+        .about-importance-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .about-importance-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            perspective: 1000px;
+        }
+
+        .importance-3d-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .importance-3d-item i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .importance-3d-item:hover {
+            transform: rotateY(15deg) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stats Section */
+        .about-stats-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .about-stats-animated {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-stat {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .about-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .about-cta-section {
+            margin: 4rem 0;
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="25" cy="25" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="7" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="85" r="4" fill="rgba(255,255,255,0.1)"/><circle cx="85" cy="15" r="6" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .about-cta-section h3 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-cta-section p {
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .about-cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #1a2a6c;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-cta-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-cta-btn i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .about-cta-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Animations */
+        @keyframes rotateCube {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .about-3d-main {
+                flex-direction: column;
+            }
+
+            .about-3d-text {
+                text-align: center;
+            }
+
+            .about-cards, .about-feedback-slider, .about-stats-animated {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bubbles Background Effect */
+        .bubbles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(26, 42, 108, 0.05);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatBubble 15s infinite ease-in;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                bottom: -100px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(100px) rotate(180deg);
+                opacity: 0.2;
+            }
+            100% {
+                bottom: 100vh;
+                transform: translateX(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <!-- Background Bubbles -->
+    <div class="bubbles-bg" id="bubbles-bg"></div>
+    
+    <div class="main-container">
+        <!-- 3D Cube Section -->
+        <div class="about-3d">
+            <h2>About MyCompany</h2>
+            <div class="about-3d-main">
+                <div class="about-3d-cube">
+                    <div class="face front"><i class="fas fa-blog"></i> Blogs</div>
+                    <div class="face back"><i class="fas fa-plus-circle"></i> Add Blogs</div>
+                    <div class="face right"><i class="fas fa-users"></i> Community</div>
+                    <div class="face left"><i class="fas fa-lightbulb"></i> Innovation</div>
+                    <div class="face top"><i class="fas fa-star"></i> Quality</div>
+                    <div class="face bottom"><i class="fas fa-headset"></i> Support</div>
+                </div>
+                <div class="about-3d-text">
+                    <h3>Welcome to a new era of blogging!</h3>
+                    <p>Our platform brings together creativity, technology, and community. Enjoy stunning visuals, smooth animations, and a delightful user experience. Add your own blogs and explore a world of ideas!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Cards -->
+        <div class="about-cards-section">
+            <h3>Our Features</h3>
+            <div class="about-cards">
+                <div class="about-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast & Secure</h4>
+                    <p>Lightning fast performance with enterprise-grade security</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-edit"></i>
+                    <h4>Easy Blog Creation</h4>
+                    <p>Intuitive editor with rich formatting options</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Responsive Design</h4>
+                    <p>Perfect experience on any device</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-comments"></i>
+                    <h4>Community Driven</h4>
+                    <p>Engage with like-minded creators</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: User Feedback -->
+        <div class="about-feedback-section">
+            <h3>User Feedback</h3>
+            <div class="about-feedback-slider">
+                <div class="about-feedback">
+                    <p>"Amazing experience! The platform is so intuitive and the 3D effects make it stand out from other blogging sites."</p>
+                    <p class="author">- Sarah J.</p>
+                </div>
+                <div class="about-feedback">
+                    <p>"Love the 3D effects! It's not just gimmicky - they actually enhance the user experience in meaningful ways."</p>
+                    <p class="author">- Michael T.</p>
+                </div>
+                <div class="about-feedback">
+                    <p>"Best blogging platform I've used. The community features are fantastic and the performance is stellar."</p>
+                    <p class="author">- Priya K.</p>
+                </div>
+                <div class="about-feedback">
+                    <p>"Super easy to use. I was able to set up my blog in minutes and start publishing right away."</p>
+                    <p class="author">- David L.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Website Functions -->
+        <div class="about-functions-section">
+            <h3>Website Functions</h3>
+            <ul class="about-functions-list">
+                <li>Sign up and log in securely with OAuth 2.0</li>
+                <li>Add, edit, and delete blogs with version history</li>
+                <li>Browse blogs from all users with advanced filters</li>
+                <li>Interactive dashboard with real-time analytics</li>
+                <li>Community feedback and engagement tools</li>
+                <li>Media-rich content with embedded support</li>
+                <li>SEO optimization tools</li>
+                <li>Custom domain integration</li>
+            </ul>
+        </div>
+
+        <!-- Section 5: Importance of Blogs -->
+        <div class="about-importance-section">
+            <h3>Why Blogs Matter</h3>
+            <div class="about-importance-3d">
+                <span class="importance-3d-item"><i class="fas fa-share-alt"></i> Share Knowledge</span>
+                <span class="importance-3d-item"><i class="fas fa-handshake"></i> Build Community</span>
+                <span class="importance-3d-item"><i class="fas fa-paint-brush"></i> Express Yourself</span>
+                <span class="importance-3d-item"><i class="fas fa-chart-line"></i> Grow Your Brand</span>
+                <span class="importance-3d-item"><i class="fas fa-network-wired"></i> Establish Authority</span>
+                <span class="importance-3d-item"><i class="fas fa-dollar-sign"></i> Monetize Content</span>
+            </div>
+        </div>
+
+        <!-- Section 6: Animated Stats -->
+        <div class="about-stats-section">
+            <h3>Platform Stats</h3>
+            <div class="about-stats-animated">
+                <div class="about-stat">
+                    <div>
+                        <div class="count">10K+</div>
+                        <div>Blogs</div>
+                    </div>
+                </div>
+                <div class="about-stat">
+                    <div>
+                        <div class="count">5K+</div>
+                        <div>Users</div>
+                    </div>
+                </div>
+                <div class="about-stat">
+                    <div>
+                        <div class="count">99.9%</div>
+                        <div>Uptime</div>
+                    </div>
+                </div>
+                <div class="about-stat">
+                    <div>
+                        <div class="count">1M+</div>
+                        <div>Visits</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Call to Action -->
+        <div class="about-cta-section">
+            <h3>Ready to Join Our Community?</h3>
+            <p>Start your blogging journey today with our powerful platform</p>
+            <a href="/signup" class="about-cta-btn">Sign Up Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create background bubbles
+            const bubblesBg = document.getElementById('bubbles-bg');
+            
+            for (let i = 0; i < 20; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bg-bubble';
+                
+                // Random size between 20px and 100px
+                const size = Math.random() * 80 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration between 10s and 25s
+                const duration = Math.random() * 15 + 10;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                bubble.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // Random opacity
+                bubble.style.opacity = Math.random() * 0.2 + 0.1;
+                
+                bubblesBg.appendChild(bubble);
+            }
+            
+            // Animate stats counting
+            const stats = document.querySelectorAll('.about-stat .count');
+            
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 30;
+                
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        stat.textContent = Math.floor(current) + (stat.textContent.includes('%') ? '%' : '+');
+                        setTimeout(updateCount, 50);
+                    } else {
+                        stat.textContent = stat.textContent.includes('%') ? 
+                            target.toFixed(1) + '%' : 
+                            target + (stat.textContent.includes('+') ? '+' : '');
+                    }
+                };
+                
+                // Start animation when stat is in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        updateCount();
+                        observer.unobserve(stat);
+                    }
+                });
+                
+                observer.observe(stat);
+            });
+        });
+    </script>
+</body>
+</html>
